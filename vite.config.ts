@@ -20,12 +20,8 @@ export default defineConfig(() => {
       https: true,
       host: `local.zhenguanyu.com`,
       proxy: {
-        '/conan-config/api': {
-          target: `https://ytkconan-sg.zhenguanyu.com`,
-          changeOrigin: true,
-        },
         '^.*api': {
-          target: `https://conan.zhenguanyu.com`,
+          target: `https://xxx.com`,
           changeOrigin: true,
         },
       },
