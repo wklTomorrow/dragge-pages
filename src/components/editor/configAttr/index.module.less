@@ -1,0 +1,30 @@
+.editor-config {
+  width: 30%;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 2px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  .config-top {
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+  }
+
+  .config-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(239, 239, 239, 0.9);
+    z-index: 3;
+  }
+  .config-form {
+    height: calc(100% - 40px);
+    overflow: auto;
+    flex: 1;
+    position: relative;
+  }
+}

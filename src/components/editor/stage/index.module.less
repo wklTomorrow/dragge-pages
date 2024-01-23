@@ -1,0 +1,97 @@
+.stage {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  margin: 0 20px;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 2px;
+  box-sizing: border-box;
+  .show-top {
+    height: 40px;
+    padding: 0 20px;
+    line-height: 40px;
+    font-size: 18px;
+  }
+  .stage-wrap {
+    height: calc(100% - 40px);
+    overflow: auto;
+  }
+}
+.editor-stage {
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  .editor-display {
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    .display-wrap {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      .editor-ins {
+        position: absolute;
+        width: 100%;
+        .inner {
+          position: relative;
+          height: 100%;
+          width: 100%;
+        }
+        .add-pre {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          cursor: pointer;
+        }
+        .add-next {
+          opacity: 0;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          cursor: pointer;
+        }
+        .delete {
+          opacity: 0;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          cursor: pointer;
+        }
+        &:hover {
+          .add-pre,
+          .delete,
+          .add-next {
+            background: #ffffff;
+            padding: 10px;
+            opacity: 1;
+          }
+          background-color: rgba(0, 0, 0, 0.03);
+        }
+      }
+      .select-ins {
+        background-color: rgba(0, 0, 0, 0.06);
+      }
+    }
+  }
+
+  .stage-container {
+    margin: 0 auto;
+    width: 50%;
+    height: 100%;
+    .stage-com {
+      width: 100%;
+      height: auto;
+      & > img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

@@ -7,10 +7,11 @@ export default defineConfig(() => {
   return {
     plugins: [react(), basicSsl()],
     resolve: {
-      alias: {
-        '@': path.resolve(__dirname),
-        '@src': path.resolve(__dirname, 'src/'),
-      },
+      alias: [
+        { find: /^~/, replacement: '' }, // 处理less ～引入
+        { find: '@', replacement: path.resolve(__dirname) },
+        { find: '@src', replacement: path.resolve(__dirname, 'src/') },
+      ],
     },
     server: {
       open: true,
@@ -19,9 +20,20 @@ export default defineConfig(() => {
       https: true,
       host: `local.zhenguanyu.com`,
       proxy: {
+        '/conan-config/api': {
+          target: `https://ytkconan-sg.zhenguanyu.com`,
+          changeOrigin: true,
+        },
         '^.*api': {
           target: `https://conan.zhenguanyu.com`,
           changeOrigin: true,
+        },
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true,
         },
       },
     },

@@ -1,8 +1,10 @@
 import React from 'react';
-import { CounterStore } from './CounterStore';
+import { EditorStore } from './EditorStore';
+import { PreviewStore } from './PreviewStore';
 
 export const stores = Object.freeze({
-  counterStore: new CounterStore(),
+  editorStore: new EditorStore(),
+  previewStore: new PreviewStore(),
 });
 
 export const storesContext = React.createContext(stores);

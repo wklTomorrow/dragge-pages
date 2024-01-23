@@ -1,0 +1,68 @@
+.editor-list {
+  width: 20%;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 2px;
+  display: flex;
+  flex-direction: column;
+  .list-top {
+    line-height: 40px;
+    padding: 0 20px;
+    font-size: 18px;
+  }
+  .list {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+
+    .list-overlay {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(239, 239, 239, 0.9);
+      z-index: 3;
+    }
+  }
+  .list-com {
+    overflow: auto;
+    max-height: 100%;
+  }
+  .list-com-img {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    margin: 0px 12px 24px;
+    cursor: pointer;
+    padding: 3px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 3px;
+    .list-com-info {
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+      opacity: 0;
+      padding: 4px 0;
+      font-size: 14px;
+      text-align: center;
+      color: rgb(255, 255, 255);
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.65);
+    }
+    &:hover {
+      .list-com-info {
+        opacity: 1;
+      }
+      transform: scale(1.057);
+      transition: all 0.2s ease 0s;
+    }
+    & > img {
+      width: 100%;
+      height: auto;
+    }
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}

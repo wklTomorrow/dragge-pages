@@ -1,0 +1,25 @@
+.preview {
+  height: 100%;
+  .container {
+    height: auto;
+    box-sizing: content-box;
+  }
+  .drag-here {
+    height: 100px;
+    padding: 10px;
+    .drag-area {
+      border: 1px solid lightgray;
+      height: 100%;
+      text-align: center;
+      line-height: 80px;
+    }
+  }
+  .preview-container {
+    width: 100%;
+    height: auto;
+    & > img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
