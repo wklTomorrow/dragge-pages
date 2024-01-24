@@ -64,7 +64,18 @@
           transform: translateY(-50%);
           cursor: pointer;
         }
+        .change-pos {
+          opacity: 0;
+          position: absolute;
+          left: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+        }
         &:hover {
+          .change-pos,
           .add-pre,
           .delete,
           .add-next {

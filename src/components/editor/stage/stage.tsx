@@ -12,7 +12,12 @@ import React, {
 } from 'react';
 import style from './index.module.less';
 import PreviewFrame from './previewFrame';
-import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import {
+  DownOutlined,
+  MinusCircleOutlined,
+  PlusCircleOutlined,
+  UpOutlined,
+} from '@ant-design/icons';
 import { KitOperateEnum } from './type';
 import { fn } from '@/src/types';
 import { message } from 'antd';
@@ -31,6 +36,7 @@ const Stage: FC<{ wrapValidate?: fn }> = ({ wrapValidate }) => {
       setSelectCom,
       setSelectIns,
       setDeleteCom,
+      setMoveSelectCom,
     },
   } = useStore();
   const stageRef = useRef<HTMLDivElement>(null);
@@ -74,15 +80,23 @@ const Stage: FC<{ wrapValidate?: fn }> = ({ wrapValidate }) => {
         setSelectCom(dragToCube, index);
         setCanDrag(true);
       })();
-    }
-    if (type === KitOperateEnum.ADD_NEXT) {
+    } else if (type === KitOperateEnum.ADD_NEXT) {
       validate.fn(() => {
         setSelectCom(dragToCube, index + 1);
         setCanDrag(true);
       })();
-    }
-    if (type === KitOperateEnum.DELETE) {
+    } else if (type === KitOperateEnum.DELETE) {
       setDeleteCom(index);
+    } else if (type === KitOperateEnum.MOVE_PRE) {
+      if (index === 0) {
+        return;
+      }
+      setMoveSelectCom(index - 1);
+    } else if (type === KitOperateEnum.MOVE_NEXT) {
+      if (index === kitInfoList.length - 1) {
+        return;
+      }
+      setMoveSelectCom(index);
     }
   };
   return (
@@ -130,6 +144,18 @@ const Stage: FC<{ wrapValidate?: fn }> = ({ wrapValidate }) => {
                           handleOperate(KitOperateEnum.ADD_NEXT, index, e);
                         }}
                       />
+                      <div className={style['change-pos']}>
+                        <UpOutlined
+                          onClick={(e) => {
+                            handleOperate(KitOperateEnum.MOVE_PRE, index, e);
+                          }}
+                        />
+                        <DownOutlined
+                          onClick={(e) => {
+                            handleOperate(KitOperateEnum.MOVE_NEXT, index, e);
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}

@@ -5,7 +5,6 @@ export const useResizeObserver = (dom: HTMLElement) => {
   const resizeObserver = new ResizeObserver((entries) => {
     for (let entry of entries) {
       const height = (entry.target as HTMLElement).offsetHeight;
-      console.log(height);
       if (update !== height) {
         setUpdate(height);
       }
@@ -15,6 +14,11 @@ export const useResizeObserver = (dom: HTMLElement) => {
     if (dom) {
       resizeObserver.observe(dom);
     }
+    return () => {
+      if (dom) {
+        resizeObserver.unobserve(dom);
+      }
+    };
   }, [dom]);
   return update;
 };

@@ -1,14 +1,16 @@
-import { useResizeObserver } from '@/src/hooks/useResizeObserver';
 import { useStore } from '@/src/stores';
 import { selectKitConfigType } from '@/src/types/kitType';
+import AsyncLoop from '@/src/utils/asycloop';
 import messager from '@/src/utils/messager';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
 import style from './index.module.less';
 
 const Preview = () => {
+  const cacheRenderDataRef = useRef<Record<string, any>>({});
+  const cacheKitInfoList = useRef<Array<any>>([]);
   const {
-    previewStore: { kitList, renderKitList, initRenderKitList, getKitView },
+    previewStore: { renderKitList, initRenderKitList, getKitView },
   } = useStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -17,6 +19,7 @@ const Preview = () => {
     messager.send('chid_ready', 'child_ready');
     messager.on('render_kit', (value = []) => {
       initRenderKitList(value as Array<selectKitConfigType>);
+      cacheKitInfoList.current = value;
     });
   }, []);
 
@@ -28,23 +31,35 @@ const Preview = () => {
         const { height, left, top } = (
           child as HTMLElement
         ).getBoundingClientRect();
-        console.log(child, { height, left, top });
         const position = { height, left, top };
-        list.push({ position, ...renderKitList?.[index] });
+        list.push({ position, ...cacheKitInfoList.current?.[index] });
       });
     }
     return list;
   };
 
-  const height = useResizeObserver(containerRef.current as HTMLElement);
   useEffect(() => {
-    if (height > 0) {
-      messager.send('render', {
-        height,
-        kitInfo: getAllKitHeight(),
-      });
-    }
-  }, [height, renderKitList.length]);
+    const loop = new AsyncLoop();
+    loop.push(() => {
+      if (containerRef.current) {
+        const { height } = (
+          containerRef.current as HTMLElement
+        )?.getBoundingClientRect();
+        const renderData = {
+          height,
+          kitInfo: getAllKitHeight(),
+        };
+        if (
+          JSON.stringify(renderData) !==
+          JSON.stringify(cacheRenderDataRef.current)
+        ) {
+          cacheRenderDataRef.current = renderData;
+          messager.send('render', cacheRenderDataRef.current);
+        }
+      }
+    });
+    loop.start();
+  }, []);
   return (
     <div className={style['preview']}>
       <div className={style['container']} ref={containerRef}>

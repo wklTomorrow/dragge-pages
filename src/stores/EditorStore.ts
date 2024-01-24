@@ -88,6 +88,19 @@ export class EditorStore {
     }
     this.sendRenderKitList();
   };
+  public setMoveSelectCom = (index: number) => {
+    this.selectCom = [
+      ...this.selectCom.slice(0, index),
+      {
+        ...this.selectCom[index + 1],
+      },
+      {
+        ...this.selectCom[index],
+      },
+      ...this.selectCom.slice(index + 2),
+    ];
+    this.sendRenderKitList();
+  };
   public setDeleteCom = (index: number) => {
     this.selectCom = [
       ...this.selectCom.slice(0, index),
